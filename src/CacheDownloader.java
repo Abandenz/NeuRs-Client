@@ -47,9 +47,9 @@ public class CacheDownloader {
     }
 
     private String getCacheDir() {
-        return signlink.findcachedir();
+        return sign.signlink.findcachedir();
     }
-    private String getCacheDlDir() {return signlink.dlcachedir(); }
+    private String getCacheDlDir() {return sign.signlink.dlcachedir(); }
 
     private String getCacheLink() {
         return cacheLink;
