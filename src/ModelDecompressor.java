@@ -11,8 +11,8 @@ public class ModelDecompressor {
 
     public static void loadModels() {
         try {
-            DataInputStream indexFile = new DataInputStream(new FileInputStream(signlink.findcachedir() + "models.idx"));
-            DataInputStream dataFile = new DataInputStream(new FileInputStream(signlink.findcachedir() + "models.dat"));
+            DataInputStream indexFile = new DataInputStream(new FileInputStream(sign.signlink.findcachedir() + "models.idx"));
+            DataInputStream dataFile = new DataInputStream(new FileInputStream(sign.signlink.findcachedir() + "models.dat"));
             int length = indexFile.readInt();
             for (int i = 0; i < length; i++) {
                 int id = indexFile.readInt();
@@ -31,8 +31,8 @@ public class ModelDecompressor {
 
     public static void loadModels2() {
         try {
-            DataInputStream indexFile = new DataInputStream(new FileInputStream(signlink.findcachedir() + "models2.idx"));
-            DataInputStream dataFile = new DataInputStream(new FileInputStream(signlink.findcachedir() + "models2.dat"));
+            DataInputStream indexFile = new DataInputStream(new FileInputStream(sign.signlink.findcachedir() + "models2.idx"));
+            DataInputStream dataFile = new DataInputStream(new FileInputStream(sign.signlink.findcachedir() + "models2.dat"));
             int length = indexFile.readInt();
             for (int i = 0; i < length; i++) {
                 int id = indexFile.readInt();

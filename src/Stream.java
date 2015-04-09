@@ -96,7 +96,7 @@ public final class Stream extends NodeSub {
             buffer[currentOffset++] = (byte) (int) (l >> 8);
             buffer[currentOffset++] = (byte) (int) l;
         } catch (RuntimeException runtimeexception) {
-            signlink.reporterror("14395, " + 5 + ", " + l + ", " + runtimeexception.toString());
+            sign.signlink.reporterror("14395, " + 5 + ", " + l + ", " + runtimeexception.toString());
             throw new RuntimeException();
         }
     }

@@ -104,7 +104,7 @@ public final class OnDemandFetcher extends OnDemandFetcherParent
                 if (current != null) {
                     loopCycle = 0;
                     if (l1 == 0) {
-                        signlink.reporterror("Rej: " + l + "," + j1);
+                        sign.signlink.reporterror("Rej: " + l + "," + j1);
                         current.buffer = null;
                         if (current.incomplete)
                             synchronized (aClass19_1358) {
@@ -405,7 +405,7 @@ public final class OnDemandFetcher extends OnDemandFetcherParent
                 }
             }
         } catch (Exception exception) {
-            signlink.reporterror("od_ex " + exception.getMessage());
+            sign.signlink.reporterror("od_ex " + exception.getMessage());
         }
     }
 

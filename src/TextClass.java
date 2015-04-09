@@ -44,7 +44,7 @@ final class TextClass {
             }
             return new String(ac, 12 - i, i);
         } catch (RuntimeException runtimeexception) {
-            signlink.reporterror("81570, " + l + ", " + (byte) -99 + ", " + runtimeexception.toString());
+            sign.signlink.reporterror("81570, " + l + ", " + (byte) -99 + ", " + runtimeexception.toString());
         }
         throw new RuntimeException();
     }

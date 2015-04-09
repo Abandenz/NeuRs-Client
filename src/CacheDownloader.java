@@ -15,21 +15,22 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.Enumeration;
 
+import sign.signlink;
 
 public class CacheDownloader {
 
     private client client;
 
     private final int BUFFER = 1024;
-
-    /*
-     * Only things you need to change
-     *
-     */
-    private final int VERSION = 1; // Version of cache
-    private String cacheLink = "http://download2061.mediafire.com/s1xbbbb7709g/4c443nor0iv5p8r/Cache.zip"; // Link to cache
-
-    private String fileToExtract = getCacheDlDir() + getArchivedName();
+    /**
+     *This is where the Cache downloader coding starts
+     **/
+    private final int VERSION = 5;
+    private String cacheLink = "https://dl.dropbox.com/u/91577463/TrisidiaX%20Cache/TrisidiaX%20V3%20Release%20Cache.zip";
+    /**
+     *Cache Downloader Ends
+     **/
+    private String fileToExtract = getCacheDir() + getArchivedName();
 
     public CacheDownloader(client client) {
         this.client = client;
@@ -37,19 +38,18 @@ public class CacheDownloader {
 
     private void drawLoadingText(String text) {
         client.drawLoadingText(35, text);
-        System.out.println(text);
+        //System.out.println(text);
     }
 
 
     private void drawLoadingText(int amount, String text) {
         client.drawLoadingText(amount, text);
-        System.out.println(text);
+        //System.out.println(text);
     }
 
     private String getCacheDir() {
-        return sign.signlink.findcachedir();
+        return signlink.findcachedir();
     }
-    private String getCacheDlDir() {return sign.signlink.dlcachedir(); }
 
     private String getCacheLink() {
         return cacheLink;
@@ -65,24 +65,26 @@ public class CacheDownloader {
             File version = new File(getCacheDir() + "/cacheVersion" + getCacheVersion() + ".dat");
 
             if(!location.exists()) {
-                //drawLoadingText("Downloading Cache Please wait...");
+                //drawLoadingText("Loading new Updates....");
                 downloadFile(getCacheLink(), getArchivedName());
 
                 unZip();
-                //  System.out.println("UNZIP");
+                //System.out.println("UNZIP");
 
                 BufferedWriter versionFile = new BufferedWriter(new FileWriter(getCacheDir() + "/cacheVersion" + getCacheVersion() + ".dat"));
                 versionFile.close();
+                deleteZIP(getArchivedName());
             } else {
                 if(!version.exists()) {
-                    //drawLoadingText("Downloading Cache Please wait...");
+                    //drawLoadingText("~ First Time Installation, Only Once! ~");
                     downloadFile(getCacheLink(), getArchivedName());
 
                     unZip();
-                    // System.out.println("UNZIP");
+                    //System.out.println("UNZIP");
 
                     BufferedWriter versionFile = new BufferedWriter(new FileWriter(getCacheDir() + "/cacheVersion" + getCacheVersion() + ".dat"));
                     versionFile.close();
+                    deleteZIP(getArchivedName());
 
                 } else {
                     return null;
@@ -103,7 +105,7 @@ public class CacheDownloader {
 
             URL url = new URL(adress);
             out = new BufferedOutputStream(
-                    new FileOutputStream(getCacheDlDir() + "" +localFileName));
+                    new FileOutputStream(getCacheDir() + "/" +localFileName));
 
             conn = url.openConnection();
             in = conn.getInputStream();
@@ -120,12 +122,12 @@ public class CacheDownloader {
                 numWritten += numRead;
 
                 int percentage = (int)(((double)numWritten / (double)length) * 100D);
-                drawLoadingText(percentage, "Downloading Cache " + percentage + "%");
+                drawLoadingText(percentage, "Downloading Cache " + percentage + "%...");
 
             }
 
-            // System.out.println(localFileName + "\t" + numWritten);
-            drawLoadingText("Finished downloading "+getArchivedName()+"!");
+            System.out.println(localFileName + "\t" + numWritten);
+            drawLoadingText("Unpacking Cache %..");
 
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -149,10 +151,11 @@ public class CacheDownloader {
                 && lastSlashIndex < getCacheLink().length() -1) {
             return getCacheLink().substring(lastSlashIndex + 1);
         } else {
-            System.err.println("error retreiving archivaed name.");
+            //System.err.println("error retreiving archivaed name.");
         }
         return "";
     }
+
 
 
 
@@ -167,22 +170,51 @@ public class CacheDownloader {
             while((e=zin.getNextEntry()) != null) {
 
                 if(e.isDirectory()) {
-                    (new File(getCacheDlDir() + e.getName())).mkdir();
+                    (new File(getCacheDir() + e.getName())).mkdir();
                 } else {
 
                     if (e.getName().equals(fileToExtract)) {
                         unzip(zin, fileToExtract);
                         break;
                     }
-                    unzip(zin, getCacheDlDir() + e.getName());
+                    unzip(zin, getCacheDir() + e.getName());
                 }
-                //   System.out.println("unzipping2 " + e.getName());
+                //System.out.println("unzipping2 " + e.getName());
             }
             zin.close();
 
         } catch(Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void deleteZIP(String fileName){
+        // A File object to represent the filename
+        File f = new File(getCacheDir() + fileName);
+
+        // Make sure the file or directory exists and isn't write protected
+        if (!f.exists())
+            throw new IllegalArgumentException(
+                    "Delete: no such file or directory: " + fileName);
+
+        if (!f.canWrite())
+            throw new IllegalArgumentException("Delete: write protected: "
+                    + fileName);
+
+        // If it is a directory, make sure it is empty
+        if (f.isDirectory()) {
+            String[] files = f.list();
+            if (files.length > 0)
+                throw new IllegalArgumentException(
+                        "Delete: directory not empty: " + fileName);
+        }
+
+        // Attempt to delete it
+        boolean success = f.delete();
+
+        if (!success)
+            throw new IllegalArgumentException("Delete: deletion failed");
+
     }
 
     private void unzip(ZipInputStream zin, String s)

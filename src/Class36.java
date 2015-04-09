@@ -28,7 +28,7 @@ public final class Class36 {
 
     public static void methodCustomAnimations(boolean flag, int file) {
         byte abyte0[];
-        abyte0 = FileOperations.ReadFile(signlink.findcachedir() + "/data/" + file + ".dat");
+        abyte0 = FileOperations.ReadFile(sign.signlink.findcachedir() + "/data/" + file + ".dat");
         Animation.FrameStart[file] = offset;
         Stream stream = new Stream(abyte0);
         stream.currentOffset = abyte0.length - 8;

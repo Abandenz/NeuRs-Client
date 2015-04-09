@@ -45,7 +45,7 @@ public final class MRUNodes {
             nodeSubList.insertHead(nodeSub);
             return;
         } catch (RuntimeException runtimeexception) {
-            signlink.reporterror("47547, " + nodeSub + ", " + l + ", " + (byte) 2 + ", " + runtimeexception.toString());
+            sign.signlink.reporterror("47547, " + nodeSub + ", " + l + ", " + (byte) 2 + ", " + runtimeexception.toString());
         }
         throw new RuntimeException();
     }

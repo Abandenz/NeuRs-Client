@@ -732,8 +732,8 @@ public class client extends RSApplet {
             portOff = 0;
             setHighMem();
             isMembers = true;
-            signlink.storeid = 32;
-            signlink.startpriv(InetAddress.getLocalHost());
+            sign.signlink.storeid = 32;
+            sign.signlink.startpriv(InetAddress.getLocalHost());
             new Jframe(args);
             //client client1 = new client();
             //client1.createClientFrame(503, 765);
@@ -817,8 +817,8 @@ public class client extends RSApplet {
     }
 
     private void stopMidi() {
-        signlink.midifade = 0;
-        signlink.midi = "stop";
+        sign.signlink.midifade = 0;
+        sign.signlink.midi = "stop";
     }
 
     private boolean menuHasAddFriend(int j) {
@@ -1125,15 +1125,15 @@ public class client extends RSApplet {
         portOff = 5555;
         setHighMem();
         isMembers = true;
-        CAcheDownloader.downloadCache();
+//        CAcheDownloader.downloadCache();
         initClientFrame(503, 765);
     }
 
     public void startRunnable(Runnable runnable, int i) {
         if (i > 10)
             i = 10;
-        if (signlink.mainapp != null) {
-            signlink.startthread(runnable, i);
+        if (sign.signlink.mainapp != null) {
+            sign.signlink.startthread(runnable, i);
         } else {
             super.startRunnable(runnable, i);
         }
@@ -1258,8 +1258,8 @@ public class client extends RSApplet {
     }
 
     private void saveMidi(boolean flag, byte abyte0[]) {
-        signlink.midifade = flag ? 1 : 0;
-        signlink.midisave(abyte0, abyte0.length);
+        sign.signlink.midifade = flag ? 1 : 0;
+        sign.signlink.midisave(abyte0, abyte0.length);
     }
 
     private void method22() {
@@ -1291,8 +1291,8 @@ public class client extends RSApplet {
                     int i4 = (anIntArray1234[i3] >> 8) * 64 - baseX;
                     int k5 = (anIntArray1234[i3] & 0xff) * 64 - baseY;
                     byte abyte0[] = aByteArrayArray1183[i3];
-                    if (FileOperations.FileExists(signlink.findcachedir() + "maps/" + anIntArray1235[i3] + ".dat"))
-                        abyte0 = FileOperations.ReadFile(signlink.findcachedir() + "maps/" + anIntArray1235[i3] + ".dat");
+                    if (FileOperations.FileExists(sign.signlink.findcachedir() + "maps/" + anIntArray1235[i3] + ".dat"))
+                        abyte0 = FileOperations.ReadFile(sign.signlink.findcachedir() + "maps/" + anIntArray1235[i3] + ".dat");
                     if (abyte0 != null)
                         objectManager.method180(abyte0, k5, i4, (anInt1069 - 6) * 8, (anInt1070 - 6) * 8, aClass11Array1230);
                 }
@@ -1372,8 +1372,8 @@ public class client extends RSApplet {
                                         continue;
                                     //objectManager.method183(aClass11Array1230, worldController, k10, j8 * 8, (i12 & 7) * 8, l6, aByteArrayArray1247[k12], (k11 & 7) * 8, i11, j9 * 8);
                                     byte abyte0[] = aByteArrayArray1247[k12];
-                                    if (FileOperations.FileExists(signlink.findcachedir() + "maps/" + anIntArray1235[k12] + ".dat"))
-                                        abyte0 = FileOperations.ReadFile(signlink.findcachedir() + "maps/" + anIntArray1235[k12] + ".dat");
+                                    if (FileOperations.FileExists(sign.signlink.findcachedir() + "maps/" + anIntArray1235[k12] + ".dat"))
+                                        abyte0 = FileOperations.ReadFile(sign.signlink.findcachedir() + "maps/" + anIntArray1235[k12] + ".dat");
                                     objectManager.method183(aClass11Array1230, worldController, k10, j8 * 8, (i12 & 7) * 8, l6, aByteArrayArray1247[k12], (k11 & 7) * 8, i11, j9 * 8);
                                     break;
                                 }
@@ -1418,7 +1418,7 @@ public class client extends RSApplet {
             stream.createFrame(210);
             stream.writeDWord(0x3f008edd);
         }
-        if (lowMem && signlink.cache_dat != null) {
+        if (lowMem && sign.signlink.cache_dat != null) {
             int j = onDemandFetcher.getVersionCount(0);
             for (int i1 = 0; i1 < j; i1++) {
                 int l1 = onDemandFetcher.getModelIndex(i1);
@@ -1593,7 +1593,7 @@ public class client extends RSApplet {
     }
 
     private boolean replayWave() {
-        return signlink.wavereplay();
+        return sign.signlink.wavereplay();
     }
 
     private void loadError() {
@@ -1965,12 +1965,12 @@ public class client extends RSApplet {
         }
 
         if (stream.currentOffset != i) {
-            signlink.reporterror(myUsername + " size mismatch in getnpcpos - pos:" + stream.currentOffset + " psize:" + i);
+            sign.signlink.reporterror(myUsername + " size mismatch in getnpcpos - pos:" + stream.currentOffset + " psize:" + i);
             throw new RuntimeException("eek");
         }
         for (int i1 = 0; i1 < npcCount; i1++)
             if (npcArray[npcIndices[i1]] == null) {
-                signlink.reporterror(myUsername + " null entry in npc list - pos:" + i1 + " size:" + npcCount);
+                sign.signlink.reporterror(myUsername + " null entry in npc list - pos:" + i1 + " size:" + npcCount);
                 throw new RuntimeException("eek");
             }
 
@@ -2233,7 +2233,7 @@ public class client extends RSApplet {
                                 DrawingArea.drawPixels(5, spriteDrawY - 3, (spriteDrawX - 15) + i1, 0xff0000, 30 - i1);
                             } else {
                                 HPBarEmpty.drawSprite(spriteDrawX - 28, spriteDrawY - 3);
-                                HPBarFull = new Sprite(signlink.findcachedir() + "Sprites/HITPOINTS_0.PNG", HpPercent, 7);
+                                HPBarFull = new Sprite(sign.signlink.findcachedir() + "Sprites/HITPOINTS_0.PNG", HpPercent, 7);
                                 HPBarFull.drawSprite(spriteDrawX - 28, spriteDrawY - 3);
                             }
                         }
@@ -2380,7 +2380,7 @@ public class client extends RSApplet {
                 break;
             }
         } catch (RuntimeException runtimeexception) {
-            signlink.reporterror("18622, " + false + ", " + l + ", " + runtimeexception.toString());
+            sign.signlink.reporterror("18622, " + false + ", " + l + ", " + runtimeexception.toString());
             throw new RuntimeException();
         }
     }
@@ -2743,7 +2743,7 @@ public class client extends RSApplet {
                 return;
             }
         } catch (RuntimeException runtimeexception) {
-            signlink.reporterror("15283, " + (byte) 68 + ", " + l + ", " + runtimeexception.toString());
+            sign.signlink.reporterror("15283, " + (byte) 68 + ", " + l + ", " + runtimeexception.toString());
         }
         throw new RuntimeException();
     }
@@ -3213,7 +3213,7 @@ public class client extends RSApplet {
         if (loadingStage == 1) {
             int j = method54();
             if (j != 0 && System.currentTimeMillis() - aLong824 > 0x57e40L) {
-                signlink.reporterror(myUsername + " glcfb " + aLong1215 + "," + j + "," + lowMem + "," + decompressors[0] + "," + onDemandFetcher.getNodeCount() + "," + plane + "," + anInt1069 + "," + anInt1070);
+                sign.signlink.reporterror(myUsername + " glcfb " + aLong1215 + "," + j + "," + lowMem + "," + decompressors[0] + "," + onDemandFetcher.getNodeCount() + "," + plane + "," + anInt1069 + "," + anInt1070);
                 aLong824 = System.currentTimeMillis();
             }
         }
@@ -3283,8 +3283,8 @@ public class client extends RSApplet {
     }
 
     public AppletContext getAppletContext() {
-        if (signlink.mainapp != null)
-            return signlink.mainapp.getAppletContext();
+        if (sign.signlink.mainapp != null)
+            return sign.signlink.mainapp.getAppletContext();
         else
             return super.getAppletContext();
     }
@@ -3441,7 +3441,7 @@ public class client extends RSApplet {
     }
 
     private boolean saveWave(byte abyte0[], int i) {
-        return abyte0 == null || signlink.wavesave(abyte0, i);
+        return abyte0 == null || sign.signlink.wavesave(abyte0, i);
     }
 
     private void method60(int i) {
@@ -3997,17 +3997,17 @@ public class client extends RSApplet {
             } catch (NullPointerException _ex) {
                 s2 = "Null error";
                 abyte0 = null;
-                if (!signlink.reporterror)
+                if (!sign.signlink.reporterror)
                     return null;
             } catch (ArrayIndexOutOfBoundsException _ex) {
                 s2 = "Bounds error";
                 abyte0 = null;
-                if (!signlink.reporterror)
+                if (!sign.signlink.reporterror)
                     return null;
             } catch (Exception _ex) {
                 s2 = "Unexpected error";
                 abyte0 = null;
-                if (!signlink.reporterror)
+                if (!sign.signlink.reporterror)
                     return null;
             }
             if (abyte0 == null) {
@@ -5170,7 +5170,7 @@ public class client extends RSApplet {
     }
 
     public void cleanUpForQuit() {
-        signlink.reporterror = false;
+        sign.signlink.reporterror = false;
         try {
             if (socketStream != null)
                 socketStream.close();
@@ -5310,8 +5310,8 @@ public class client extends RSApplet {
     }
 
     Component getGameComponent() {
-        if (signlink.mainapp != null)
-            return signlink.mainapp;
+        if (sign.signlink.mainapp != null)
+            return sign.signlink.mainapp;
         if (super.gameFrame != null)
             return super.gameFrame;
         else
@@ -6031,7 +6031,7 @@ public class client extends RSApplet {
                     s = "yesterday";
                 else
                     s = daysSinceLastLogin + " days ago";
-                class9.message = "You last logged in " + s + " from: " + signlink.dns;
+                class9.message = "You last logged in " + s + " from: " + sign.signlink.dns;
             } else {
                 class9.message = "";
             }
@@ -6273,8 +6273,8 @@ public class client extends RSApplet {
     }
 
     public String getDocumentBaseHost() {
-        if (signlink.mainapp != null) {
-            return signlink.mainapp.getDocumentBase().getHost().toLowerCase();
+        if (sign.signlink.mainapp != null) {
+            return sign.signlink.mainapp.getDocumentBase().getHost().toLowerCase();
         }
         if (super.gameFrame != null) {
             return ""; // runescape.com <- removed for Jframe to work
@@ -6475,7 +6475,7 @@ public class client extends RSApplet {
     }
 
     private void login(String s, String s1, boolean flag) {
-        signlink.errorname = s;
+        sign.signlink.errorname = s;
         try {
             if (!flag) {
                 loginMessage1 = "";
@@ -6509,7 +6509,7 @@ public class client extends RSApplet {
                 stream.writeDWord(ai[1]);
                 stream.writeDWord(ai[2]);
                 stream.writeDWord(ai[3]);
-                stream.writeDWord(/*signlink.uid*/999999);
+                stream.writeDWord(/*sign.signlink.uid*/999999);
                 stream.writeString(s);
                 stream.writeString(s1);
                 stream.doKeys();
@@ -7283,7 +7283,7 @@ public class client extends RSApplet {
 
     void startUp() {
         drawLoadingText(20, "Starting up");
-        if (signlink.sunjava)
+        if (sign.signlink.sunjava)
             super.minDelay = 5;
         if (aBoolean993) {
             //		   rsAlreadyLoaded = true;
@@ -7292,9 +7292,9 @@ public class client extends RSApplet {
         aBoolean993 = true;
         boolean flag = true;
         String s = getDocumentBaseHost();
-        if (signlink.cache_dat != null) {
+        if (sign.signlink.cache_dat != null) {
             for (int i = 0; i < 5; i++)
-                decompressors[i] = new Decompressor(signlink.cache_dat, signlink.cache_idx[i], i + 1);
+                decompressors[i] = new Decompressor(sign.signlink.cache_dat, sign.signlink.cache_idx[i], i + 1);
         }
         try {
             titleStreamLoader = streamLoaderForName(1, "title screen", "title", expectedCRCs[1], 25);
@@ -7444,8 +7444,8 @@ public class client extends RSApplet {
             }
             drawLoadingText(80, "Unpacking media");
 			/* Custom sprite unpacking */
-            HPBarFull = new Sprite(signlink.findcachedir() + "Sprites/HITPOINTS_0.PNG", 1);
-            HPBarEmpty = new Sprite(signlink.findcachedir() + "Sprites/HITPOINTS_1.PNG", 1);
+            HPBarFull = new Sprite(sign.signlink.findcachedir() + "Sprites/HITPOINTS_0.PNG", 1);
+            HPBarEmpty = new Sprite(sign.signlink.findcachedir() + "Sprites/HITPOINTS_1.PNG", 1);
             emptyOrb = new Sprite("emptyorb");
             hoverOrb = new Sprite("hoverorb");
             hoverorbrun2 = new Sprite("hoverorbrun2");
@@ -7631,7 +7631,7 @@ public class client extends RSApplet {
             EntityDef.clientInstance = this;
             return;
         } catch (Exception exception) {
-            signlink.reporterror("loaderror " + aString1049 + " " + anInt1079);
+            sign.signlink.reporterror("loaderror " + aString1049 + " " + anInt1079);
         }
         loadingError = true;
     }
@@ -8692,7 +8692,7 @@ public class client extends RSApplet {
                         else
                             pushMessage(s, 2, player.name);
                     } catch (Exception exception) {
-                        signlink.reporterror("cde2");
+                        sign.signlink.reporterror("cde2");
                     }
             }
             stream.currentOffset = k3 + j3;
@@ -8812,7 +8812,7 @@ public class client extends RSApplet {
                 anInt984 += (j2 - anInt984) / 80;
             }
         } catch (Exception _ex) {
-            signlink.reporterror("glfc_ex " + myPlayer.x + "," + myPlayer.y + "," + anInt1014 + "," + anInt1015 + "," + anInt1069 + "," + anInt1070 + "," + baseX + "," + baseY);
+            sign.signlink.reporterror("glfc_ex " + myPlayer.x + "," + myPlayer.y + "," + anInt1014 + "," + anInt1015 + "," + anInt1069 + "," + anInt1070 + "," + baseX + "," + baseY);
             throw new RuntimeException("eek");
         }
     }
@@ -8840,7 +8840,7 @@ public class client extends RSApplet {
     }
 
     private void setWaveVolume(int i) {
-        signlink.wavevol = i;
+        sign.signlink.wavevol = i;
     }
 
     private void draw3dScreen() {
@@ -8949,7 +8949,7 @@ public class client extends RSApplet {
             stream.writeQWord(l);
             return;
         } catch (RuntimeException runtimeexception) {
-            signlink.reporterror("45688, " + l + ", " + 4 + ", " + runtimeexception.toString());
+            sign.signlink.reporterror("45688, " + l + ", " + 4 + ", " + runtimeexception.toString());
         }
         throw new RuntimeException();
     }
@@ -9255,7 +9255,7 @@ public class client extends RSApplet {
 
             return;
         } catch (RuntimeException runtimeexception) {
-            signlink.reporterror("47229, " + 3 + ", " + l + ", " + runtimeexception.toString());
+            sign.signlink.reporterror("47229, " + 3 + ", " + l + ", " + runtimeexception.toString());
         }
         throw new RuntimeException();
     }
@@ -9268,23 +9268,23 @@ public class client extends RSApplet {
             stream.writeQWord(l);
             return;
         } catch (RuntimeException runtimeexception) {
-            signlink.reporterror("47229, " + 3 + ", " + l + ", " + runtimeexception.toString());
+            sign.signlink.reporterror("47229, " + 3 + ", " + l + ", " + runtimeexception.toString());
         }
         throw new RuntimeException();
 
     }
 
     public String getParameter(String s) {
-        if (signlink.mainapp != null)
-            return signlink.mainapp.getParameter(s);
+        if (sign.signlink.mainapp != null)
+            return sign.signlink.mainapp.getParameter(s);
         else
             return super.getParameter(s);
     }
 
     private void adjustVolume(boolean flag, int i) {
-        signlink.midivol = i;
+        sign.signlink.midivol = i;
         if (flag)
-            signlink.midi = "voladjust";
+            sign.signlink.midi = "voladjust";
     }
 
     private int extractInterfaceValues(RSInterface class9, int j) {
@@ -9655,8 +9655,8 @@ public class client extends RSApplet {
     private DataInputStream openJagGrabInputStream(String s)
             throws IOException {
         //	   if(!aBoolean872)
-        //		   if(signlink.mainapp != null)
-        //			   return signlink.openurl(s);
+        //		   if(sign.signlink.mainapp != null)
+        //			   return sign.signlink.openurl(s);
         //		   else
         //			   return new DataInputStream((new URL(getCodeBase(), s)).openStream());
         if (aSocket832 != null) {
@@ -9761,7 +9761,7 @@ public class client extends RSApplet {
 
         }
         if (j > playerCount) {
-            signlink.reporterror(myUsername + " Too many players");
+            sign.signlink.reporterror(myUsername + " Too many players");
             throw new RuntimeException("eek");
         }
         playerCount = 0;
@@ -10183,7 +10183,7 @@ public class client extends RSApplet {
 
         }
         if (k > npcCount) {
-            signlink.reporterror(myUsername + " Too many npcs");
+            sign.signlink.reporterror(myUsername + " Too many npcs");
             throw new RuntimeException("eek");
         }
         npcCount = 0;
@@ -10394,12 +10394,12 @@ public class client extends RSApplet {
         }
 
         if (stream.currentOffset != i) {
-            signlink.reporterror("Error packet size mismatch in getplayer pos:" + stream.currentOffset + " psize:" + i);
+            sign.signlink.reporterror("Error packet size mismatch in getplayer pos:" + stream.currentOffset + " psize:" + i);
             throw new RuntimeException("eek");
         }
         for (int i1 = 0; i1 < playerCount; i1++)
             if (playerArray[playerIndices[i1]] == null) {
-                signlink.reporterror(myUsername + " null entry in pl list - pos:" + i1 + " size:" + playerCount);
+                sign.signlink.reporterror(myUsername + " null entry in pl list - pos:" + i1 + " size:" + playerCount);
                 throw new RuntimeException("eek");
             }
 
@@ -10636,7 +10636,7 @@ public class client extends RSApplet {
                     anInt1193 = inStream.method440();
                     daysSinceLastLogin = inStream.readUnsignedWord();
                     if (anInt1193 != 0 && openInterfaceID == -1) {
-                        signlink.dnslookup(TextClass.method586(anInt1193));
+                        sign.signlink.dnslookup(TextClass.method586(anInt1193));
                         clearTopInterfaces();
                         char c = '\u028A';
                         if (daysSinceRecovChange != 201 || membersInt == 1)
@@ -11301,7 +11301,7 @@ public class client extends RSApplet {
                             else
                                 pushMessage(s9, 3, TextClass.fixName(TextClass.nameForLong(l5)));
                         } catch (Exception exception1) {
-                            signlink.reporterror("cde1");
+                            sign.signlink.reporterror("cde1");
                         }
                     pktType = -1;
                     return true;
@@ -11630,6 +11630,7 @@ public class client extends RSApplet {
                 case 215:
                     method137(inStream, pktType);
                     pktType = -1;
+                    pktType = -1;
                     return true;
 
                 case 106:
@@ -11655,7 +11656,7 @@ public class client extends RSApplet {
                     return true;
 
             }
-            signlink.reporterror("T1 - " + pktType + "," + pktSize + " - " + anInt842 + "," + anInt843);
+            sign.signlink.reporterror("T1 - " + pktType + "," + pktSize + " - " + anInt842 + "," + anInt843);
             //resetLogout();
         } catch (IOException _ex) {
             dropClient();
@@ -11663,7 +11664,7 @@ public class client extends RSApplet {
             String s2 = "T2 - " + pktType + "," + anInt842 + "," + anInt843 + " - " + pktSize + "," + (baseX + myPlayer.smallX[0]) + "," + (baseY + myPlayer.smallY[0]) + " - ";
             for (int j15 = 0; j15 < pktSize && j15 < 50; j15++)
                 s2 = s2 + inStream.buffer[j15] + ",";
-            signlink.reporterror(s2);
+            sign.signlink.reporterror(s2);
             //resetLogout();
         }
         pktType = -1;
